@@ -1,14 +1,14 @@
+FROM jupyter/scipy-notebook:latest
 
-FROM python:3.11
+# Switch to root to install packages
+USER root
 
-# Set working directory
-WORKDIR /app
+# Copy your project
+COPY . /home/jovyan/work
 
-# Copy your project files
-COPY . .
+# Install Python dependencies (if file exists)
+RUN pip install --no-cache-dir -r /home/jovyan/work/requirements.txt || true
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Switch back to default user
+USER jovyan
 
-# Default command
-CMD eproducibility"run_workflow.py"]
